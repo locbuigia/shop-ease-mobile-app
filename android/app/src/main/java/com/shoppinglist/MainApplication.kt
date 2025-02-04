@@ -1,4 +1,4 @@
-package com.shoppinglist
+package com.ShopEase
 
 import android.app.Application
 import com.facebook.react.PackageList
