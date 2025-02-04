@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Home from './src/screens/Home';
-import ProductDetails from './src/screens/ProductDetails';
+import Cart from './src/screens/Cart';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -29,8 +29,8 @@ const App = () => {
           options={{headerShown: false, title: 'Home'}}
         />
         <Tab.Screen
-          name="ProductDetails"
-          component={ProductDetails}
+          name="Cart"
+          component={Cart}
           options={{headerShown: false}}
         />
       </Tab.Navigator>
