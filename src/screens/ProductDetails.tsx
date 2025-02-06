@@ -1,18 +1,17 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Header from '../components/Header';
 
-const ProductDetails = ({route}: any) => {
-  //   const {product} = route.params;
-  console.log('test');
+const ProductDetails = ({navigation}: any) => {
   return (
     <View style={styles.container}>
-      <Header showMenu={false} showGoBack={true} title={'Product Details'} />
+      <Header
+        navigation={navigation}
+        showGoBack={true}
+        title={'Product Details'}
+      />
       <ScrollView style={styles.container}>
-        {/* <Image source={{uri: product.image}} />
-        <Text>{product.name}</Text>
-        <Text>${product.price}</Text> */}
-        <Text>Product Details page</Text>
+        <Text style={styles.text}>This is Product Details screen</Text>
       </ScrollView>
     </View>
   );
@@ -21,9 +20,10 @@ const ProductDetails = ({route}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'black',
   },
   text: {
-    color: 'darkslateblue',
+    color: 'white',
     fontSize: 30,
   },
 });

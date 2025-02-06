@@ -1,27 +1,49 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import React, {PropsWithChildren} from 'react';
+import React from 'react';
 
-type ProductProps = PropsWithChildren<{
+interface Props {
   product: Product;
-}>;
+}
 
-const ProductItem = ({product}: ProductProps) => {
+const ProductItem = ({product}: Props) => {
   return (
     <View style={styles.container}>
-      <Image source={{uri: product.image}} style={styles.image} />
-      <View>
-        <Text>{product.name}</Text>
-        <Text>{product.price}</Text>
+      <Image
+        source={{
+          uri: product.image,
+        }}
+        style={styles.image}
+      />
+      <View style={styles.textContent}>
+        <Text
+          style={{color: 'white', fontSize: 16, fontFamily: 'Poppins-Regular'}}>
+          {product.name}
+        </Text>
+        <Text
+          style={{color: 'white', fontSize: 14, fontFamily: 'Poppins-Light'}}>
+          ${product.price}
+        </Text>
       </View>
     </View>
   );
 };
 
-export default ProductItem;
-
 const styles = StyleSheet.create({
   container: {
-    margin: 8,
+    margin: 28,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  image: {},
+  image: {
+    width: 120,
+    height: 150,
+  },
+  textContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
+
+export default ProductItem;
