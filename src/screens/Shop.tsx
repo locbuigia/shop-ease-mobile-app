@@ -55,8 +55,9 @@ const Shop = ({navigation}: any) => {
         <View style={styles.sortActionView}>
           <Ionicons name="swap-vertical-outline" color={'white'} size={20} />
           <Dropdown
-            style={[styles.dropdown]}
+            style={styles.dropdown}
             selectedTextStyle={styles.selectedTextStyle}
+            iconStyle={styles.dropdownIcon}
             data={sortOptions}
             maxHeight={300}
             labelField="label"
@@ -81,7 +82,6 @@ const Shop = ({navigation}: any) => {
         ListHeaderComponent={renderHeaderComponent}
         renderItem={renderItem}
         numColumns={2}
-        columnWrapperStyle={{margin: 0}}
       />
     </View>
   );
@@ -120,18 +120,23 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontFamily: 'Poppins-Regular',
+    textDecorationLine: 'underline',
   },
   text: {
     color: 'darkslateblue',
     fontSize: 30,
   },
   dropdown: {
-    width: '80%',
+    width: '70%',
     height: 50,
     marginLeft: 8,
     color: 'white',
   },
+  dropdownIcon: {
+    display: 'none',
+  },
   selectedTextStyle: {
+    textDecorationLine: 'underline',
     fontFamily: 'Poppins-Regular',
     color: 'white',
     fontSize: 16,

@@ -45,7 +45,8 @@ const App = () => {
         initialRouteName="Home"
         screenOptions={{
           tabBarLabelStyle: {
-            fontFamily: 'Poppins-SemiBold',
+            fontFamily: 'Poppins-Regular',
+            fontSize: 15,
           },
           tabBarStyle: {
             height: 60,

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import ProductItem from '../components/ProductItem';
 import {PRODUCT_LIST} from '../data/constants';
+import ProductType from '../components/ProductType';
 
 interface ProductItem {
   item: Product;
@@ -35,7 +36,7 @@ const Home = ({navigation}: any) => {
         <View style={{width: '100%'}}>
           <View style={styles.blackBackground} />
           <Image
-            source={require('../assets/images/backpack-type.jpg')}
+            source={require('../assets/images/shopping-background-photo.jpg')}
             style={styles.image}
           />
           <View style={styles.bannerTextView}>
@@ -50,9 +51,8 @@ const Home = ({navigation}: any) => {
             </TouchableOpacity>
           </View>
         </View>
-
         <View style={styles.flatListContainer}>
-          <Text style={styles.labelText}>New Products</Text>
+          <Text style={styles.labelText}>New Collections</Text>
           <FlatList
             data={newProducts}
             keyExtractor={item => item.id.toString()}
@@ -61,7 +61,22 @@ const Home = ({navigation}: any) => {
             nestedScrollEnabled={true}
           />
         </View>
-        <View style={[styles.flatListContainer, {marginTop: 30}]}>
+        <ProductType
+          image={require('../assets/images/backpack-type.jpg')}
+          label="Backpack"
+          navigation={navigation}
+        />
+        <ProductType
+          image={require('../assets/images/duffle-type.jpg')}
+          label="Duffle"
+          navigation={navigation}
+        />
+        <ProductType
+          image={require('../assets/images/travel-type.jpg')}
+          label="Travel"
+          navigation={navigation}
+        />
+        <View style={styles.flatListContainer}>
           <Text style={styles.labelText}>Our Favorites</Text>
           <FlatList
             data={favoriteProducts}
@@ -86,7 +101,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 600,
     position: 'absolute',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.65)',
   },
   container: {
     alignItems: 'center',
@@ -113,15 +128,21 @@ const styles = StyleSheet.create({
     height: 600,
     resizeMode: 'cover',
   },
+  typeImage: {
+    width: '100%',
+    height: 280,
+    resizeMode: 'cover',
+  },
   labelText: {
     fontFamily: 'DancingScript-Bold',
     fontSize: 36,
     marginTop: 20,
     marginLeft: 20,
     color: 'white',
+    textAlign: 'center',
   },
   flatListContainer: {
-    height: 300,
+    height: 350,
   },
   shopNowButton: {
     width: 170,
