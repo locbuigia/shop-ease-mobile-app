@@ -1,39 +1,24 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
-  FlatList,
-  Pressable,
   Image,
   Text,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import ProductItem from '../components/ProductItem';
 import {PRODUCT_LIST} from '../data/constants';
 import ProductType from '../components/ProductType';
-
-interface ProductItem {
-  item: Product;
-}
+import Collection from '../components/Collection';
 
 const Home = ({navigation}: any) => {
   const newProducts = PRODUCT_LIST.filter(item => item.isNew);
   const favoriteProducts = PRODUCT_LIST.filter(item => item.isFavorite);
 
-  const renderItem = useCallback(
-    ({item}: ProductItem) => (
-      <Pressable onPress={() => navigation.navigate('ProductDetails')}>
-        <ProductItem product={item} />
-      </Pressable>
-    ),
-    [],
-  );
-
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
-        <View style={{width: '100%'}}>
+        <View style={styles.heroView}>
           <View style={styles.blackBackground} />
           <Image
             source={require('../assets/images/shopping-background-photo.jpg')}
@@ -51,16 +36,11 @@ const Home = ({navigation}: any) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.flatListContainer}>
-          <Text style={styles.labelText}>New Collections</Text>
-          <FlatList
-            data={newProducts}
-            keyExtractor={item => item.id.toString()}
-            renderItem={renderItem}
-            horizontal={true}
-            nestedScrollEnabled={true}
-          />
-        </View>
+        <Collection
+          label={'New Collections'}
+          products={newProducts}
+          navigation={navigation}
+        />
         <ProductType
           image={require('../assets/images/backpack-type.jpg')}
           label="Backpack"
@@ -76,16 +56,11 @@ const Home = ({navigation}: any) => {
           label="Travel"
           navigation={navigation}
         />
-        <View style={styles.flatListContainer}>
-          <Text style={styles.labelText}>Our Favorites</Text>
-          <FlatList
-            data={favoriteProducts}
-            keyExtractor={item => item.id.toString()}
-            renderItem={renderItem}
-            horizontal={true}
-            nestedScrollEnabled={true}
-          />
-        </View>
+        <Collection
+          label={'Our Favorites'}
+          products={favoriteProducts}
+          navigation={navigation}
+        />
       </View>
     </ScrollView>
   );
@@ -128,22 +103,6 @@ const styles = StyleSheet.create({
     height: 600,
     resizeMode: 'cover',
   },
-  typeImage: {
-    width: '100%',
-    height: 280,
-    resizeMode: 'cover',
-  },
-  labelText: {
-    fontFamily: 'DancingScript-Bold',
-    fontSize: 36,
-    marginTop: 20,
-    marginLeft: 20,
-    color: 'white',
-    textAlign: 'center',
-  },
-  flatListContainer: {
-    height: 350,
-  },
   shopNowButton: {
     width: 170,
     marginTop: 20,
@@ -157,6 +116,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     fontSize: 20,
     color: 'white',
+  },
+  heroView: {
+    width: '100%',
   },
 });
 
