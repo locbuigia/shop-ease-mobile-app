@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {COLORS} from '../../data/constants';
+import {COLORS} from '../../constants';
 
 const Thumb = () => {
   return <View style={styles.rootLow} />;

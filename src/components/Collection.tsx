@@ -9,7 +9,11 @@ import {
 } from 'react-native';
 import ProductItem from './ProductItem';
 import {useDispatch} from 'react-redux';
-import {BAG_TYPE_ALL, PRODUCT_LIST} from '../data/constants';
+import {
+  BAG_TYPE_ALL,
+  PRODUCT_LIST,
+  PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH,
+} from '../constants';
 import {
   setCurrentMaxPrice,
   setCurrentMinPrice,
@@ -17,6 +21,7 @@ import {
   setMinPriceRange,
   setProducts,
   setSelectedProductType,
+  setSelectedSortType,
 } from '../features/appSlice';
 
 interface Props {
@@ -34,7 +39,7 @@ const Collection = ({label, products, navigation}: Props) => {
 
   const handleNavigateToShopScreen = () => {
     dispatch(setSelectedProductType(BAG_TYPE_ALL));
-    dispatch(setSelectedProductType(BAG_TYPE_ALL));
+    dispatch(setSelectedSortType(PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH));
     let minPriceByType = PRODUCT_LIST.reduce((min, current) =>
       current.price < min.price ? current : min,
     ).price;

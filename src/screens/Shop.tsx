@@ -17,8 +17,9 @@ import {
   PRODUCT_SORT_TYPE_NAME_DESC,
   PRODUCT_SORT_TYPE_PRICE_HIGH_TO_LOW,
   PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH,
-} from '../data/constants';
-import {setProducts} from '../features/appSlice';
+} from '../constants';
+import {setProducts, setSelectedSortType} from '../features/appSlice';
+import {sortItemsByType} from '../utils';
 
 interface ProductItem {
   item: Product;
@@ -39,29 +40,14 @@ const sortOptions = [
 const Shop = ({navigation}: any) => {
   const dispatch = useDispatch();
   const products = useSelector((state: AppState) => state.app.products);
-  const [value, setValue] = useState(sortOptions[0].value);
+  const sortType = useSelector((state: AppState) => state.app.selectedSortType);
+  const [value, setValue] = useState(sortType);
 
   const handleSortSelect = (item: SortSelection) => {
     setValue(item.value);
     const items = [...products];
-    switch (item.value) {
-      case PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH:
-        dispatch(setProducts(items.sort((a, b) => a.price - b.price)));
-        break;
-      case PRODUCT_SORT_TYPE_PRICE_HIGH_TO_LOW:
-        dispatch(setProducts(items.sort((a, b) => b.price - a.price)));
-        break;
-      case PRODUCT_SORT_TYPE_NAME_ASC:
-        dispatch(
-          setProducts(items.sort((a, b) => a.name.localeCompare(b.name))),
-        );
-        break;
-      case PRODUCT_SORT_TYPE_NAME_DESC:
-        dispatch(
-          setProducts(items.sort((a, b) => b.name.localeCompare(a.name))),
-        );
-        break;
-    }
+    dispatch(setSelectedSortType(item.value));
+    dispatch(setProducts(sortItemsByType(items, item.value)));
   };
 
   const handleNavigate = () => {

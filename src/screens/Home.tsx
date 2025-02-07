@@ -14,7 +14,8 @@ import {
   BAG_TYPE_TRAVEL,
   COLORS,
   PRODUCT_LIST,
-} from '../data/constants';
+  PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH,
+} from '../constants';
 import ProductType from '../components/ProductType';
 import Collection from '../components/Collection';
 import {useDispatch, useSelector} from 'react-redux';
@@ -25,6 +26,7 @@ import {
   setMinPriceRange,
   setProducts,
   setSelectedProductType,
+  setSelectedSortType,
 } from '../features/appSlice';
 
 const Home = ({navigation}: any) => {
@@ -35,6 +37,7 @@ const Home = ({navigation}: any) => {
 
   const handleNavigateToShopScreen = () => {
     dispatch(setSelectedProductType(BAG_TYPE_ALL));
+    dispatch(setSelectedSortType(PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH));
     let minPriceByType = PRODUCT_LIST.reduce((min, current) =>
       current.price < min.price ? current : min,
     ).price;

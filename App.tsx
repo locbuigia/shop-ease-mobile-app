@@ -13,7 +13,7 @@ import ProductDetails from './src/screens/ProductDetails';
 import {Provider} from 'react-redux';
 import {store} from './src/store';
 import Filter from './src/screens/Filter';
-import {COLORS} from './src/data/constants';
+import {COLORS} from './src/constants';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

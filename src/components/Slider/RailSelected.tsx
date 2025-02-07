@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {COLORS} from '../../data/constants';
+import {COLORS} from '../../constants';
 
 const RailSelected = () => {
   return <View style={styles.root} />;

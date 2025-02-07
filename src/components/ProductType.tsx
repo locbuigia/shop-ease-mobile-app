@@ -7,7 +7,7 @@ import {
   Text,
   Pressable,
 } from 'react-native';
-import {BAG_TYPE_ALL, COLORS, PRODUCT_LIST} from '../data/constants';
+import {BAG_TYPE_ALL, COLORS, PRODUCT_LIST} from '../constants';
 import {useDispatch} from 'react-redux';
 import {
   setCurrentMaxPrice,

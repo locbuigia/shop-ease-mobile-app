@@ -29,12 +29,16 @@ import {
   BAG_TYPE_TRAVEL,
   COLORS,
   PRODUCT_LIST,
-} from '../data/constants';
+} from '../constants';
+import {sortItemsByType} from '../utils';
 
 const Filter = ({navigation}: any) => {
   const dispatch = useDispatch();
   const selectedProductType = useSelector(
     (state: AppState) => state.app.selectedProductType,
+  );
+  const selectedSortType = useSelector(
+    (state: AppState) => state.app.selectedSortType,
   );
   const minPriceRange = useSelector(
     (state: AppState) => state.app.minPriceRange,
@@ -75,9 +79,10 @@ const Filter = ({navigation}: any) => {
 
   const handleSelectType = (type: string) => {
     dispatch(setSelectedProductType(type));
+
     let itemsByType =
       type === BAG_TYPE_ALL
-        ? PRODUCT_LIST
+        ? [...PRODUCT_LIST]
         : PRODUCT_LIST.filter(item => item.type === type);
 
     let minPriceByType = itemsByType.reduce((min, current) =>
@@ -94,13 +99,7 @@ const Filter = ({navigation}: any) => {
     dispatch(setCurrentMaxPrice(maxPriceByType));
     setMinPrice(minPriceByType);
     setMaxPrice(maxPriceByType);
-    dispatch(
-      setProducts(
-        type === BAG_TYPE_ALL
-          ? PRODUCT_LIST
-          : PRODUCT_LIST.filter(item => item.type === type),
-      ),
-    );
+    dispatch(setProducts(sortItemsByType(itemsByType, selectedSortType)));
   };
 
   return (

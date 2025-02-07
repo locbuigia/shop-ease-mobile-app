@@ -1,5 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {BAG_TYPE_ALL, PRODUCT_LIST} from '../data/constants';
+import {
+  BAG_TYPE_ALL,
+  PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH,
+  PRODUCT_LIST,
+} from '../constants';
 
 const minPrice = PRODUCT_LIST.reduce((min, current) =>
   current.price < min.price ? current : min,
@@ -12,6 +16,7 @@ const maxPrice = PRODUCT_LIST.reduce((max, current) =>
 const initialState = {
   products: PRODUCT_LIST,
   isLoading: false,
+  selectedSortType: PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH,
   selectedProductType: BAG_TYPE_ALL,
   currentMinPrice: 0,
   currentMaxPrice: 0,
@@ -28,6 +33,9 @@ export const appSlice = createSlice({
     },
     setSelectedProductType: (state, action) => {
       state.selectedProductType = action.payload;
+    },
+    setSelectedSortType: (state, action) => {
+      state.selectedSortType = action.payload;
     },
     setCurrentMinPrice: (state, action) => {
       state.currentMinPrice = action.payload;
@@ -50,6 +58,7 @@ export const appSlice = createSlice({
 export const {
   setIsLoading,
   setSelectedProductType,
+  setSelectedSortType,
   setCurrentMinPrice,
   setCurrentMaxPrice,
   setMinPriceRange,

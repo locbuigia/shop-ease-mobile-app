@@ -14,6 +14,7 @@ interface AppState {
     products: Product[];
     isLoading: boolean;
     selectedProductType: string;
+    selectedSortType: number;
     minPriceRange: number;
     maxPriceRange: number;
     currentMinPrice: number;
