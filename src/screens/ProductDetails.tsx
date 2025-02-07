@@ -11,22 +11,25 @@ import Header from '../components/Header';
 import {COLORS, PRODUCT_LIST} from '../constants';
 import Collection from '../components/Collection';
 import Divider from '../components/Divider';
+import {useDispatch} from 'react-redux';
+import {addItemToUserCart} from '../features/userSlice';
 
 interface Props {
   route: any;
   navigation: any;
 }
 
-const ProductDetails = (props: Props) => {
-  console.log(props);
+const ProductDetails = ({route, navigation}: Props) => {
+  const dispatch = useDispatch();
   const {
-    route: {
-      params: {item},
-    },
-    navigation,
-  } = props;
+    params: {item},
+  } = route;
 
   const favoriteProducts = PRODUCT_LIST.filter(item => item.isFavorite);
+
+  const handleAddItemToCart = () => {
+    dispatch(addItemToUserCart(item));
+  };
 
   return (
     <View style={styles.container}>
@@ -66,7 +69,9 @@ const ProductDetails = (props: Props) => {
           </View>
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => handleAddItemToCart()}>
         <Text style={styles.addText}>Add To Cart</Text>
       </TouchableOpacity>
     </View>
