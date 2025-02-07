@@ -7,8 +7,8 @@ const Divider = () => {
 
 const styles = StyleSheet.create({
   divider: {
-    height: 1,
-    backgroundColor: '#CAD5E2',
+    height: 2,
+    backgroundColor: 'gray',
   },
 });
 

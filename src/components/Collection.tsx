@@ -28,13 +28,19 @@ interface Props {
   label: string;
   products: Product[];
   navigation: any;
+  showViewAll?: boolean;
 }
 
 interface ProductItem {
   item: Product;
 }
 
-const Collection = ({label, products, navigation}: Props) => {
+const Collection = ({
+  label,
+  products,
+  navigation,
+  showViewAll = true,
+}: Props) => {
   const dispatch = useDispatch();
 
   const handleNavigateToShopScreen = () => {
@@ -55,9 +61,13 @@ const Collection = ({label, products, navigation}: Props) => {
     navigation.navigate('ShopScreen');
   };
 
+  const handleNavigate = (item: Product) => {
+    navigation.navigate('ProductDetails', {item});
+  };
+
   const renderItem = useCallback(
     ({item}: ProductItem) => (
-      <Pressable onPress={() => navigation.navigate('ProductDetails')}>
+      <Pressable onPress={() => handleNavigate(item)}>
         <ProductItem product={item} />
       </Pressable>
     ),
@@ -68,9 +78,11 @@ const Collection = ({label, products, navigation}: Props) => {
     <View style={styles.flatListContainer}>
       <View style={styles.flatListLabelView}>
         <Text style={styles.labelText}>{label}</Text>
-        <TouchableOpacity onPress={() => handleNavigateToShopScreen()}>
-          <Text style={styles.viewAllText}>View All</Text>
-        </TouchableOpacity>
+        {showViewAll && (
+          <TouchableOpacity onPress={() => handleNavigateToShopScreen()}>
+            <Text style={styles.viewAllText}>View All</Text>
+          </TouchableOpacity>
+        )}
       </View>
       <FlatList
         data={products}

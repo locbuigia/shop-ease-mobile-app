@@ -14,6 +14,7 @@ import {Provider} from 'react-redux';
 import {store} from './src/store';
 import Filter from './src/screens/Filter';
 import {COLORS} from './src/constants';
+import Profile from './src/screens/Profile';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -68,6 +69,16 @@ const App = () => {
               headerShown: false,
               tabBarIcon: ({color, size}) => (
                 <Ionicons name="cart" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Profile"
+            component={Profile}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color, size}) => (
+                <Ionicons name="person" color={color} size={size} />
               ),
             }}
           />

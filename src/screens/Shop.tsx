@@ -50,13 +50,13 @@ const Shop = ({navigation}: any) => {
     dispatch(setProducts(sortItemsByType(items, item.value)));
   };
 
-  const handleNavigate = () => {
-    navigation.navigate('ProductDetails');
+  const handleNavigate = (item: Product) => {
+    navigation.navigate('ProductDetails', {item});
   };
 
   const renderItem = useCallback(
     ({item}: ProductItem) => (
-      <Pressable onPress={() => handleNavigate()}>
+      <Pressable onPress={() => handleNavigate(item)}>
         <ProductItem product={item} />
       </Pressable>
     ),
