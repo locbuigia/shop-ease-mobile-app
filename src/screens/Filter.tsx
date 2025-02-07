@@ -12,7 +12,6 @@ import RangeSlider from 'rn-range-slider';
 import Thumb from '../components/Slider/Thumb';
 import Rail from '../components/Slider/Rail';
 import RailSelected from '../components/Slider/RailSelected';
-import Notch from '../components/Slider/Notch';
 import {
   setCurrentMaxPrice,
   setCurrentMinPrice,
@@ -34,6 +33,7 @@ import {sortItemsByType} from '../utils';
 
 const Filter = ({navigation}: any) => {
   const dispatch = useDispatch();
+  const products = useSelector((state: AppState) => state.app.products);
   const selectedProductType = useSelector(
     (state: AppState) => state.app.selectedProductType,
   );
@@ -59,7 +59,6 @@ const Filter = ({navigation}: any) => {
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
   const renderRailSelected = useCallback(() => <RailSelected />, []);
-  const renderNotch = useCallback(() => <Notch />, []);
   const handleValueChange = useCallback((low: number, high: number) => {
     setMinPrice(low);
     setMaxPrice(high);
@@ -70,7 +69,7 @@ const Filter = ({navigation}: any) => {
     dispatch(setCurrentMaxPrice(maxPrice));
     dispatch(
       setProducts(
-        PRODUCT_LIST.filter(
+        products.filter(
           item => item.price >= minPrice && item.price <= maxPrice,
         ),
       ),
@@ -117,7 +116,6 @@ const Filter = ({navigation}: any) => {
             renderThumb={renderThumb}
             renderRail={renderRail}
             renderRailSelected={renderRailSelected}
-            renderNotch={renderNotch}
             onValueChanged={handleValueChange}
             onSliderTouchEnd={handleSliderTouchEnd}
           />
