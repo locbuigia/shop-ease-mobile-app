@@ -8,3 +8,31 @@ interface Product {
   type: string;
   rating: number;
 }
+
+interface AppState {
+  app: {
+    products: Product[];
+    isLoading: boolean;
+    selectedProductType: string;
+    minPriceRange: number;
+    maxPriceRange: number;
+    currentMinPrice: number;
+    currentMaxPrice: number;
+  };
+}
+
+interface User {
+  userName: string;
+  userEmail: string;
+  userPassword: string;
+}
+
+interface UserState {
+  user: {
+    registeredUsers: User[];
+    isLoggedIn: boolean;
+    userName: string;
+    userEmail: string;
+    itemsInUserCart: Product[];
+  };
+}

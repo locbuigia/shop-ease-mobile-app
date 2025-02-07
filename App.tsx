@@ -10,6 +10,11 @@ import Cart from './src/screens/Cart';
 import Shop from './src/screens/Shop';
 import ProductDetails from './src/screens/ProductDetails';
 
+import {Provider} from 'react-redux';
+import {store} from './src/store';
+import Filter from './src/screens/Filter';
+import {COLORS} from './src/data/constants';
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -21,18 +26,7 @@ const HomeStack = () => {
       }}>
       <Stack.Screen name="HomeScreen" component={Home} />
       <Stack.Screen name="ShopScreen" component={Shop} />
-      <Stack.Screen name="ProductDetails" component={ProductDetails} />
-    </Stack.Navigator>
-  );
-};
-
-const ShopStack = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Stack.Screen name="ShopScreen" component={Shop} />
+      <Stack.Screen name="FilterScreen" component={Filter} />
       <Stack.Screen name="ProductDetails" component={ProductDetails} />
     </Stack.Navigator>
   );
@@ -40,54 +34,46 @@ const ShopStack = () => {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          tabBarLabelStyle: {
-            fontFamily: 'Poppins-Regular',
-            fontSize: 15,
-          },
-          tabBarStyle: {
-            height: 60,
-            paddingTop: 10,
-            backgroundColor: 'black',
-          },
-          tabBarActiveTintColor: '#EF3651',
-        }}>
-        <Tab.Screen
-          name="Home"
-          component={HomeStack}
-          options={{
-            headerShown: false,
-            title: 'Home',
-            tabBarIcon: ({color, size}) => (
-              <Ionicons name="home" color={color} size={size} />
-            ),
-          }}
-        />
-        {/* <Tab.Screen
-          name="Shop"
-          component={ShopStack}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Ionicons name="storefront" color={color} size={size} />
-            ),
-          }}
-        /> */}
-        <Tab.Screen
-          name="Cart"
-          component={Cart}
-          options={{
-            headerShown: false,
-            tabBarIcon: ({color, size}) => (
-              <Ionicons name="cart" color={color} size={size} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            tabBarLabelStyle: {
+              fontFamily: 'Poppins-Regular',
+              fontSize: 15,
+            },
+            tabBarStyle: {
+              height: 60,
+              paddingTop: 10,
+              backgroundColor: 'black',
+            },
+            tabBarActiveTintColor: COLORS.primary,
+          }}>
+          <Tab.Screen
+            name="Home"
+            component={HomeStack}
+            options={{
+              headerShown: false,
+              title: 'Home',
+              tabBarIcon: ({color, size}) => (
+                <Ionicons name="home" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Cart"
+            component={Cart}
+            options={{
+              headerShown: false,
+              tabBarIcon: ({color, size}) => (
+                <Ionicons name="cart" color={color} size={size} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

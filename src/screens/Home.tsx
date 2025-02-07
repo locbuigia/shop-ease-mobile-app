@@ -7,13 +7,48 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {PRODUCT_LIST} from '../data/constants';
+import {
+  BAG_TYPE_ALL,
+  BAG_TYPE_BACKPACK,
+  BAG_TYPE_DUFFLE,
+  BAG_TYPE_TRAVEL,
+  COLORS,
+  PRODUCT_LIST,
+} from '../data/constants';
 import ProductType from '../components/ProductType';
 import Collection from '../components/Collection';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  setCurrentMaxPrice,
+  setCurrentMinPrice,
+  setMaxPriceRange,
+  setMinPriceRange,
+  setProducts,
+  setSelectedProductType,
+} from '../features/appSlice';
 
 const Home = ({navigation}: any) => {
+  const dispatch = useDispatch();
+
   const newProducts = PRODUCT_LIST.filter(item => item.isNew);
   const favoriteProducts = PRODUCT_LIST.filter(item => item.isFavorite);
+
+  const handleNavigateToShopScreen = () => {
+    dispatch(setSelectedProductType(BAG_TYPE_ALL));
+    let minPriceByType = PRODUCT_LIST.reduce((min, current) =>
+      current.price < min.price ? current : min,
+    ).price;
+
+    let maxPriceByType = PRODUCT_LIST.reduce((max, current) =>
+      current.price > max.price ? current : max,
+    ).price;
+    dispatch(setMinPriceRange(minPriceByType));
+    dispatch(setMaxPriceRange(maxPriceByType));
+    dispatch(setCurrentMinPrice(minPriceByType));
+    dispatch(setCurrentMaxPrice(maxPriceByType));
+    dispatch(setProducts(PRODUCT_LIST));
+    navigation.navigate('ShopScreen');
+  };
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -31,7 +66,7 @@ const Home = ({navigation}: any) => {
             </Text>
             <TouchableOpacity
               style={styles.shopNowButton}
-              onPress={() => navigation.navigate('ShopScreen')}>
+              onPress={() => handleNavigateToShopScreen()}>
               <Text style={styles.shopNowText}>Shop Now</Text>
             </TouchableOpacity>
           </View>
@@ -45,16 +80,19 @@ const Home = ({navigation}: any) => {
           image={require('../assets/images/backpack-type.jpg')}
           label="Backpack"
           navigation={navigation}
+          type={BAG_TYPE_BACKPACK}
         />
         <ProductType
           image={require('../assets/images/duffle-type.jpg')}
           label="Duffle"
           navigation={navigation}
+          type={BAG_TYPE_DUFFLE}
         />
         <ProductType
           image={require('../assets/images/travel-type.jpg')}
           label="Travel"
           navigation={navigation}
+          type={BAG_TYPE_TRAVEL}
         />
         <Collection
           label={'Our Favorites'}
@@ -106,7 +144,7 @@ const styles = StyleSheet.create({
   shopNowButton: {
     width: 170,
     marginTop: 20,
-    backgroundColor: '#EF3651',
+    backgroundColor: COLORS.primary,
     borderRadius: 20,
     paddingVertical: 5,
     display: 'flex',

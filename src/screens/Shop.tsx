@@ -1,12 +1,24 @@
 import React, {useCallback, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 import Header from '../components/Header';
-
 import ProductItem from '../components/ProductItem';
-import {PRODUCT_LIST} from '../data/constants';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Dropdown} from 'react-native-element-dropdown';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  PRODUCT_SORT_TYPE_NAME_ASC,
+  PRODUCT_SORT_TYPE_NAME_DESC,
+  PRODUCT_SORT_TYPE_PRICE_HIGH_TO_LOW,
+  PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH,
+} from '../data/constants';
+import {setProducts} from '../features/appSlice';
 
 interface ProductItem {
   item: Product;
@@ -18,18 +30,38 @@ interface SortSelection {
 }
 
 const sortOptions = [
-  {label: 'Price (Low to High)', value: 1},
-  {label: 'Price (High to Low)', value: 2},
-  {label: 'Name (A to Z)', value: 3},
-  {label: 'Name (Z to Z)', value: 4},
+  {label: 'Price (Low to High)', value: PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH},
+  {label: 'Price (High to Low)', value: PRODUCT_SORT_TYPE_PRICE_HIGH_TO_LOW},
+  {label: 'Name (A to Z)', value: PRODUCT_SORT_TYPE_NAME_ASC},
+  {label: 'Name (Z to A)', value: PRODUCT_SORT_TYPE_NAME_DESC},
 ];
 
 const Shop = ({navigation}: any) => {
+  const dispatch = useDispatch();
+  const products = useSelector((state: AppState) => state.app.products);
   const [value, setValue] = useState(sortOptions[0].value);
 
   const handleSortSelect = (item: SortSelection) => {
     setValue(item.value);
-    console.log(item);
+    const items = [...products];
+    switch (item.value) {
+      case PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH:
+        dispatch(setProducts(items.sort((a, b) => a.price - b.price)));
+        break;
+      case PRODUCT_SORT_TYPE_PRICE_HIGH_TO_LOW:
+        dispatch(setProducts(items.sort((a, b) => b.price - a.price)));
+        break;
+      case PRODUCT_SORT_TYPE_NAME_ASC:
+        dispatch(
+          setProducts(items.sort((a, b) => a.name.localeCompare(b.name))),
+        );
+        break;
+      case PRODUCT_SORT_TYPE_NAME_DESC:
+        dispatch(
+          setProducts(items.sort((a, b) => b.name.localeCompare(a.name))),
+        );
+        break;
+    }
   };
 
   const handleNavigate = () => {
@@ -45,13 +77,16 @@ const Shop = ({navigation}: any) => {
     [],
   );
 
-  const renderHeaderComponent = useCallback(
-    () => (
+  return (
+    <View style={styles.container}>
+      <Header showGoBack={true} title={'Products'} navigation={navigation} />
       <View style={styles.actionContainer}>
-        <View style={styles.filterActionView}>
+        <TouchableOpacity
+          style={styles.filterActionView}
+          onPress={() => navigation.navigate('FilterScreen')}>
           <Ionicons name="filter-outline" color={'white'} size={20} />
           <Text style={styles.actionText}>Filters</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.sortActionView}>
           <Ionicons name="swap-vertical-outline" color={'white'} size={20} />
           <Dropdown
@@ -69,17 +104,14 @@ const Shop = ({navigation}: any) => {
           />
         </View>
       </View>
-    ),
-    [],
-  );
-
-  return (
-    <View style={styles.container}>
-      <Header showGoBack={true} title={'Products'} navigation={navigation} />
       <FlatList
-        data={PRODUCT_LIST}
+        data={products}
         keyExtractor={item => item.id.toString()}
-        ListHeaderComponent={renderHeaderComponent}
+        ListEmptyComponent={() => (
+          <View style={styles.emptyListView}>
+            <Text style={styles.emptyListText}>No Products Found!</Text>
+          </View>
+        )}
         renderItem={renderItem}
         numColumns={2}
       />
@@ -93,11 +125,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'black',
-    paddingBottom: 60,
+    height: '100%',
   },
   actionContainer: {
-    marginTop: 10,
-    marginBottom: 10,
+    paddingHorizontal: 24,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -140,6 +171,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     color: 'white',
     fontSize: 16,
+  },
+  emptyListView: {
+    width: '100%',
+    marginTop: 20,
+  },
+  emptyListText: {
+    textAlign: 'center',
+    fontFamily: 'Poppins-Relugar',
+    fontSize: 18,
+    color: 'white',
   },
 });
 

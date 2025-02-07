@@ -185,3 +185,17 @@ export const PRODUCT_LIST: Product[] = [
     rating: 4.5,
   },
 ];
+
+export const COLORS = {
+  primary: '#EF3651',
+};
+
+export const BAG_TYPE_ALL = 'ALL';
+export const BAG_TYPE_BACKPACK = 'BACKPACK';
+export const BAG_TYPE_DUFFLE = 'DUFFLE_BAG';
+export const BAG_TYPE_TRAVEL = 'TRAVEL_BAG';
+
+export const PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH = 0;
+export const PRODUCT_SORT_TYPE_PRICE_HIGH_TO_LOW = 1;
+export const PRODUCT_SORT_TYPE_NAME_ASC = 2;
+export const PRODUCT_SORT_TYPE_NAME_DESC = 3;

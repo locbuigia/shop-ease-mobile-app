@@ -8,6 +8,16 @@ import {
   FlatList,
 } from 'react-native';
 import ProductItem from './ProductItem';
+import {useDispatch} from 'react-redux';
+import {BAG_TYPE_ALL, PRODUCT_LIST} from '../data/constants';
+import {
+  setCurrentMaxPrice,
+  setCurrentMinPrice,
+  setMaxPriceRange,
+  setMinPriceRange,
+  setProducts,
+  setSelectedProductType,
+} from '../features/appSlice';
 
 interface Props {
   label: string;
@@ -20,6 +30,26 @@ interface ProductItem {
 }
 
 const Collection = ({label, products, navigation}: Props) => {
+  const dispatch = useDispatch();
+
+  const handleNavigateToShopScreen = () => {
+    dispatch(setSelectedProductType(BAG_TYPE_ALL));
+    dispatch(setSelectedProductType(BAG_TYPE_ALL));
+    let minPriceByType = PRODUCT_LIST.reduce((min, current) =>
+      current.price < min.price ? current : min,
+    ).price;
+
+    let maxPriceByType = PRODUCT_LIST.reduce((max, current) =>
+      current.price > max.price ? current : max,
+    ).price;
+    dispatch(setMinPriceRange(minPriceByType));
+    dispatch(setMaxPriceRange(maxPriceByType));
+    dispatch(setCurrentMinPrice(minPriceByType));
+    dispatch(setCurrentMaxPrice(maxPriceByType));
+    dispatch(setProducts(PRODUCT_LIST));
+    navigation.navigate('ShopScreen');
+  };
+
   const renderItem = useCallback(
     ({item}: ProductItem) => (
       <Pressable onPress={() => navigation.navigate('ProductDetails')}>
@@ -33,7 +63,7 @@ const Collection = ({label, products, navigation}: Props) => {
     <View style={styles.flatListContainer}>
       <View style={styles.flatListLabelView}>
         <Text style={styles.labelText}>{label}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('ShopScreen')}>
+        <TouchableOpacity onPress={() => handleNavigateToShopScreen()}>
           <Text style={styles.viewAllText}>View All</Text>
         </TouchableOpacity>
       </View>
