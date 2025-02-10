@@ -23,6 +23,7 @@ import {
   setSelectedProductType,
   setSelectedSortType,
 } from '../features/appSlice';
+import {StackActions} from '@react-navigation/native';
 
 interface Props {
   label: string;
@@ -62,7 +63,8 @@ const Collection = ({
   };
 
   const handleNavigate = (item: Product) => {
-    navigation.navigate('ProductDetails', {item});
+    const pushAction = StackActions.push('ProductDetails', {item});
+    navigation.dispatch(pushAction);
   };
 
   const renderItem = useCallback(

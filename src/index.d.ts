@@ -7,6 +7,7 @@ interface Product {
   isNew?: boolean;
   type: string;
   rating: number;
+  quantity?: number;
 }
 
 interface AppState {

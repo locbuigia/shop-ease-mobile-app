@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -28,6 +28,7 @@ import {
   setSelectedProductType,
   setSelectedSortType,
 } from '../features/appSlice';
+import Header from '../components/Header';
 
 const Home = ({navigation}: any) => {
   const dispatch = useDispatch();
@@ -54,60 +55,66 @@ const Home = ({navigation}: any) => {
   };
 
   return (
-    <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
-        <View style={styles.heroView}>
-          <View style={styles.blackBackground} />
-          <Image
-            source={require('../assets/images/shopping-background-photo.jpg')}
-            style={styles.image}
-          />
-          <View style={styles.bannerTextView}>
-            <Text style={styles.appName}>ShopEase</Text>
-            <Text style={styles.appDescription}>
-              Your one-stop shop for bags and backpacks!
-            </Text>
-            <TouchableOpacity
-              style={styles.shopNowButton}
-              onPress={() => handleNavigateToShopScreen()}>
-              <Text style={styles.shopNowText}>Shop Now</Text>
-            </TouchableOpacity>
+    <View style={styles.container}>
+      <Header navigation={navigation} showGoBack={false} title={'ShopEase'} />
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.inner}>
+          <View style={styles.heroView}>
+            <View style={styles.blackBackground} />
+            <Image
+              source={require('../assets/images/shopping-background-photo.jpg')}
+              style={styles.image}
+            />
+            <View style={styles.bannerTextView}>
+              <Text style={styles.appName}>ShopEase</Text>
+              <Text style={styles.appDescription}>
+                Your one-stop shop for bags and backpacks!
+              </Text>
+              <TouchableOpacity
+                style={styles.shopNowButton}
+                onPress={() => handleNavigateToShopScreen()}>
+                <Text style={styles.shopNowText}>Shop Now</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+          <Collection
+            label={'New Collections'}
+            products={newProducts}
+            navigation={navigation}
+          />
+          <ProductType
+            image={require('../assets/images/backpack-type.jpg')}
+            label="Backpack"
+            navigation={navigation}
+            type={BAG_TYPE_BACKPACK}
+          />
+          <ProductType
+            image={require('../assets/images/duffle-type.jpg')}
+            label="Duffle"
+            navigation={navigation}
+            type={BAG_TYPE_DUFFLE}
+          />
+          <ProductType
+            image={require('../assets/images/travel-type.jpg')}
+            label="Travel"
+            navigation={navigation}
+            type={BAG_TYPE_TRAVEL}
+          />
+          <Collection
+            label={'Our Favorites'}
+            products={favoriteProducts}
+            navigation={navigation}
+          />
         </View>
-        <Collection
-          label={'New Collections'}
-          products={newProducts}
-          navigation={navigation}
-        />
-        <ProductType
-          image={require('../assets/images/backpack-type.jpg')}
-          label="Backpack"
-          navigation={navigation}
-          type={BAG_TYPE_BACKPACK}
-        />
-        <ProductType
-          image={require('../assets/images/duffle-type.jpg')}
-          label="Duffle"
-          navigation={navigation}
-          type={BAG_TYPE_DUFFLE}
-        />
-        <ProductType
-          image={require('../assets/images/travel-type.jpg')}
-          label="Travel"
-          navigation={navigation}
-          type={BAG_TYPE_TRAVEL}
-        />
-        <Collection
-          label={'Our Favorites'}
-          products={favoriteProducts}
-          navigation={navigation}
-        />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingBottom: 60,
+  },
   scrollView: {
     width: '100%',
     backgroundColor: 'black',
@@ -119,7 +126,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'rgba(0, 0, 0, 0.65)',
   },
-  container: {
+  inner: {
     alignItems: 'center',
   },
   bannerTextView: {

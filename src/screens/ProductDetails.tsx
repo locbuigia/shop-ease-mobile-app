@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,11 @@ import Header from '../components/Header';
 import {COLORS, PRODUCT_LIST} from '../constants';
 import Collection from '../components/Collection';
 import Divider from '../components/Divider';
-import {useDispatch} from 'react-redux';
-import {addItemToUserCart} from '../features/userSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  addItemToUserCart,
+  updateItemQuantityInUserCart,
+} from '../features/userSlice';
 
 interface Props {
   route: any;
@@ -21,6 +24,10 @@ interface Props {
 
 const ProductDetails = ({route, navigation}: Props) => {
   const dispatch = useDispatch();
+  const itemsInUserCart = useSelector(
+    (state: UserState) => state.user.itemsInUserCart,
+  );
+
   const {
     params: {item},
   } = route;
@@ -28,7 +35,21 @@ const ProductDetails = ({route, navigation}: Props) => {
   const favoriteProducts = PRODUCT_LIST.filter(item => item.isFavorite);
 
   const handleAddItemToCart = () => {
-    dispatch(addItemToUserCart(item));
+    const foundItem = itemsInUserCart.find(x => x.id === item.id);
+    if (foundItem) {
+      let itemToAdd = {
+        ...foundItem,
+        quantity: (foundItem.quantity || 0) + 1,
+      };
+
+      dispatch(updateItemQuantityInUserCart(itemToAdd));
+    } else {
+      let itemToAdd = {
+        ...item,
+        quantity: 1,
+      };
+      dispatch(addItemToUserCart(itemToAdd));
+    }
   };
 
   return (

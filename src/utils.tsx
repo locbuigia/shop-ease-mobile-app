@@ -17,3 +17,7 @@ export const sortItemsByType = (products: Product[], type: number) => {
       return products.sort((a, b) => b.name.localeCompare(a.name));
   }
 };
+
+export const pluralize = (value: number, singular: string, plural: string) => {
+  return value === 1 ? singular : plural;
+};

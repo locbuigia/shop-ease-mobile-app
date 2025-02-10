@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Header from '../components/Header';
+import {useSelector} from 'react-redux';
 
-const Profile = ({route, navigation}: any) => {
+const Search = ({navigation}: any) => {
   return (
     <View style={styles.container}>
-      <Header showGoBack={false} title={'Profile'} navigation={navigation} />
+      <Header showGoBack={false} title={'Search'} navigation={navigation} />
       <ScrollView style={styles.container}>
-        <Text style={styles.text}>This is Profile screen</Text>
+        <Text style={styles.text}>This is Search screen</Text>
       </ScrollView>
     </View>
   );
@@ -24,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default Search;

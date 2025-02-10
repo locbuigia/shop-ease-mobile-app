@@ -15,6 +15,7 @@ import {store} from './src/store';
 import Filter from './src/screens/Filter';
 import {COLORS} from './src/constants';
 import Profile from './src/screens/Profile';
+import Search from './src/screens/Search';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -29,6 +30,7 @@ const HomeStack = () => {
       <Stack.Screen name="ShopScreen" component={Shop} />
       <Stack.Screen name="FilterScreen" component={Filter} />
       <Stack.Screen name="ProductDetails" component={ProductDetails} />
+      <Stack.Screen name="Cart" component={Cart} />
     </Stack.Navigator>
   );
 };
@@ -40,6 +42,7 @@ const App = () => {
         <Tab.Navigator
           initialRouteName="Home"
           screenOptions={{
+            animation: 'fade',
             tabBarLabelStyle: {
               fontFamily: 'Poppins-Regular',
               fontSize: 15,
@@ -63,12 +66,12 @@ const App = () => {
             }}
           />
           <Tab.Screen
-            name="Cart"
-            component={Cart}
+            name="Search"
+            component={Search}
             options={{
               headerShown: false,
               tabBarIcon: ({color, size}) => (
-                <Ionicons name="cart" color={color} size={size} />
+                <Ionicons name="search" color={color} size={size} />
               ),
             }}
           />
