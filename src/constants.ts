@@ -199,3 +199,6 @@ export const PRODUCT_SORT_TYPE_PRICE_LOW_TO_HIGH = 0;
 export const PRODUCT_SORT_TYPE_PRICE_HIGH_TO_LOW = 1;
 export const PRODUCT_SORT_TYPE_NAME_ASC = 2;
 export const PRODUCT_SORT_TYPE_NAME_DESC = 3;
+
+export const ITEM_DESCRIPTION =
+  'Travel smart with our durable and stylish travel bag, designed for both functionality and comfort. Featuring spacious compartments, multiple pockets, and a lightweight, water-resistant build, it’s perfect for keeping your essentials organized on the go. Whether for a weekend getaway or a long journey, this bag is your ideal travel companion!';

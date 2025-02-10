@@ -35,6 +35,19 @@ const HomeStack = () => {
   );
 };
 
+const SearchStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="SearchScreen" component={Search} />
+      <Stack.Screen name="ProductDetails" component={ProductDetails} />
+      <Stack.Screen name="Cart" component={Cart} />
+    </Stack.Navigator>
+  );
+};
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -67,7 +80,7 @@ const App = () => {
           />
           <Tab.Screen
             name="Search"
-            component={Search}
+            component={SearchStack}
             options={{
               headerShown: false,
               tabBarIcon: ({color, size}) => (
