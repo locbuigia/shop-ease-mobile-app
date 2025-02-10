@@ -48,6 +48,18 @@ const SearchStack = () => {
   );
 };
 
+const ProfileStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="ProfileScreen" component={Profile} />
+      <Stack.Screen name="Cart" component={Cart} />
+    </Stack.Navigator>
+  );
+};
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -90,7 +102,7 @@ const App = () => {
           />
           <Tab.Screen
             name="Profile"
-            component={Profile}
+            component={ProfileStack}
             options={{
               headerShown: false,
               tabBarIcon: ({color, size}) => (
