@@ -24,6 +24,7 @@
     "react-native-vector-icons": "^10.2.0",
     "react-redux": "^9.2.0",
     "rn-range-slider": "^2.2.2",
+    "toastify-react-native": "^5.0.4",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {

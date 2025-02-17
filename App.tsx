@@ -16,6 +16,7 @@ import Filter from './src/screens/Filter';
 import {COLORS} from './src/constants';
 import Profile from './src/screens/Profile';
 import Search from './src/screens/Search';
+import ToastManager from 'toastify-react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -62,57 +63,60 @@ const ProfileStack = () => {
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Tab.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            animation: 'fade',
-            tabBarLabelStyle: {
-              fontFamily: 'Poppins-Regular',
-              fontSize: 15,
-            },
-            tabBarStyle: {
-              height: 60,
-              paddingTop: 10,
-              backgroundColor: 'black',
-            },
-            tabBarActiveTintColor: COLORS.primary,
-          }}>
-          <Tab.Screen
-            name="Home"
-            component={HomeStack}
-            options={{
-              headerShown: false,
-              title: 'Home',
-              tabBarIcon: ({color, size}) => (
-                <Ionicons name="home" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Search"
-            component={SearchStack}
-            options={{
-              headerShown: false,
-              tabBarIcon: ({color, size}) => (
-                <Ionicons name="search" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Profile"
-            component={ProfileStack}
-            options={{
-              headerShown: false,
-              tabBarIcon: ({color, size}) => (
-                <Ionicons name="person" color={color} size={size} />
-              ),
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Tab.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              animation: 'fade',
+              tabBarLabelStyle: {
+                fontFamily: 'Poppins-Regular',
+                fontSize: 15,
+              },
+              tabBarStyle: {
+                height: 60,
+                paddingTop: 10,
+                backgroundColor: 'black',
+              },
+              tabBarActiveTintColor: COLORS.primary,
+            }}>
+            <Tab.Screen
+              name="Home"
+              component={HomeStack}
+              options={{
+                headerShown: false,
+                title: 'Home',
+                tabBarIcon: ({color, size}) => (
+                  <Ionicons name="home" color={color} size={size} />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Search"
+              component={SearchStack}
+              options={{
+                headerShown: false,
+                tabBarIcon: ({color, size}) => (
+                  <Ionicons name="search" color={color} size={size} />
+                ),
+              }}
+            />
+            <Tab.Screen
+              name="Profile"
+              component={ProfileStack}
+              options={{
+                headerShown: false,
+                tabBarIcon: ({color, size}) => (
+                  <Ionicons name="person" color={color} size={size} />
+                ),
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </Provider>
+      <ToastManager duration={2500} />
+    </>
   );
 };
 

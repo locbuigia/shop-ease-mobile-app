@@ -21,6 +21,14 @@ const Header = ({
     (state: UserState) => state.user.itemsInUserCart,
   );
 
+  const totalQty =
+    itemsInUserCart.length > 0
+      ? itemsInUserCart.reduce(
+          (totalQty, item) => (totalQty += item.quantity || 0),
+          0,
+        )
+      : 0;
+
   return (
     <View style={styles.header}>
       {showGoBack && (
@@ -37,7 +45,7 @@ const Header = ({
           onPress={() => navigation.navigate('Cart')}>
           <Ionicons name={'cart'} size={30} color={'white'} />
           <View style={styles.cartBadge}>
-            <Text style={styles.cartBadgeText}>{itemsInUserCart.length}</Text>
+            <Text style={styles.cartBadgeText}>{totalQty}</Text>
           </View>
         </TouchableOpacity>
       )}

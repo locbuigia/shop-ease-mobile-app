@@ -19,6 +19,7 @@ import {
 } from '../features/userSlice';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Divider from '../components/Divider';
+import {Toast} from 'toastify-react-native';
 
 const Profile = ({navigation}: any) => {
   const dispatch = useDispatch();
@@ -40,12 +41,12 @@ const Profile = ({navigation}: any) => {
 
   const handleLogin = () => {
     if (!emailInput || !passwordInput) {
-      Alert.alert('Error', 'Please fill in all fields.');
+      Toast.error('Please fill in all fields!');
       return;
     }
 
     if (!validateEmail(emailInput)) {
-      Alert.alert('Error', 'Invalid email address!');
+      Toast.error('Invalid email address!');
       return;
     }
 
@@ -60,18 +61,18 @@ const Profile = ({navigation}: any) => {
       dispatch(setUserLoginStatus(true));
       clearInput();
     } else {
-      Alert.alert('Login Failed', 'Invalid credentials!');
+      Toast.error('Invalid credentials!');
     }
   };
 
   const handleRegister = () => {
     if (!userNameInput || !emailInput || !passwordInput) {
-      Alert.alert('Error', 'Please fill in all fields.');
+      Toast.error('Please fill in all fields.');
       return;
     }
 
     if (!validateEmail(emailInput)) {
-      Alert.alert('Error', 'Invalid email address! Please check again!');
+      Toast.error('Invalid email address! Please check again!');
       return;
     }
 
@@ -80,7 +81,7 @@ const Profile = ({navigation}: any) => {
     );
 
     if (isUserFound) {
-      Alert.alert('Error', 'Email address has been used already!');
+      Toast.error('Email address has been used already!');
       return;
     }
 

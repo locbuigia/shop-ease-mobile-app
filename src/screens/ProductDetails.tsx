@@ -16,6 +16,7 @@ import {
   addItemToUserCart,
   updateItemQuantityInUserCart,
 } from '../features/userSlice';
+import {Toast} from 'toastify-react-native';
 
 interface Props {
   route: any;
@@ -50,6 +51,7 @@ const ProductDetails = ({route, navigation}: Props) => {
       };
       dispatch(addItemToUserCart(itemToAdd));
     }
+    Toast.success('Product added to cart');
   };
 
   return (
